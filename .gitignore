@@ -1,0 +1,77 @@
+.idea
+.vs
+.vscode
+# Ignore build directories
+**/bin/
+**/obj/
+**/out/
+
+# Ignore user-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+.ionide/
+
+# Ignore JetBrains Rider project files
+*.sln.iml
+
+# Ignore Mac system files
+.DS_Store
+
+# Ignore logs and debug artifacts
+*.log
+**/*.log
+debug.log
+*.tsbuildinfo
+
+# Ignore NuGet packages
+**/packages/
+*.nupkg
+
+# Ignore Publish output
+**/publish/
+**/wwwroot/dist/
+**/wwwroot/publish/
+
+# Ignore temporary files and caches
+*.swp
+*.tmp
+*.bak
+*.old
+*.seed
+
+# Ignore test result files
+**/TestResults/
+.trx
+.coverage
+
+# Ignore configuration files generated at runtime
+appsettings.*.json
+
+# Ignore files related to Resharper
+_ReSharper*/
+*.DotSettings.user
+
+# Ignore Entity Framework Migrations history
+*MigrationsHistoryTable*
+
+# Ignore sensitive configuration files
+secrets.json
+
+# Ignore temporary files used by Rider, VS, or debugging
+*.vsix
+*.vsconfig
+
+# Ignore npm or frontend dependencies in a Clean Architecture project
+node_modules/
+dist/
+
+# Ignore build artifacts for Docker
+docker-compose.override.yml
+.env
+
