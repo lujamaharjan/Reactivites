@@ -10,7 +10,7 @@ public class Seed
 
         var activities = new List<Activity>
         {
-            new Activity
+            new()
             {
                 Title = "Past Activity 1",
                 Date = DateTime.UtcNow.AddMonths(-2),
@@ -19,7 +19,7 @@ public class Seed
                 City = "London",
                 Venue = "Pub"
             },
-            new Activity
+            new()
             {
                 Title = "Past Activity 2",
                 Date = DateTime.UtcNow.AddMonths(-1),
@@ -28,7 +28,7 @@ public class Seed
                 City = "Paris",
                 Venue = "Louvre"
             },
-            new Activity
+            new()
             {
                 Title = "Future Activity 1",
                 Date = DateTime.UtcNow.AddMonths(1),
@@ -37,7 +37,7 @@ public class Seed
                 City = "London",
                 Venue = "Natural History Museum"
             },
-            new Activity
+            new()
             {
                 Title = "Future Activity 2",
                 Date = DateTime.UtcNow.AddMonths(2),
@@ -46,7 +46,7 @@ public class Seed
                 City = "London",
                 Venue = "O2 Arena"
             },
-            new Activity
+            new()
             {
                 Title = "Future Activity 3",
                 Date = DateTime.UtcNow.AddMonths(3),
@@ -55,7 +55,7 @@ public class Seed
                 City = "London",
                 Venue = "Another pub"
             },
-            new Activity
+            new()
             {
                 Title = "Future Activity 4",
                 Date = DateTime.UtcNow.AddMonths(4),
@@ -64,7 +64,7 @@ public class Seed
                 City = "London",
                 Venue = "Yet another pub"
             },
-            new Activity
+            new()
             {
                 Title = "Future Activity 5",
                 Date = DateTime.UtcNow.AddMonths(5),
@@ -73,7 +73,7 @@ public class Seed
                 City = "London",
                 Venue = "Just another pub"
             },
-            new Activity
+            new()
             {
                 Title = "Future Activity 6",
                 Date = DateTime.UtcNow.AddMonths(6),
@@ -82,7 +82,7 @@ public class Seed
                 City = "London",
                 Venue = "Roundhouse Camden"
             },
-            new Activity
+            new()
             {
                 Title = "Future Activity 7",
                 Date = DateTime.UtcNow.AddMonths(7),
@@ -91,7 +91,7 @@ public class Seed
                 City = "London",
                 Venue = "Somewhere on the Thames"
             },
-            new Activity
+            new()
             {
                 Title = "Future Activity 8",
                 Date = DateTime.UtcNow.AddMonths(8),
