@@ -1,17 +1,26 @@
 import {Button, Form, Segment} from "semantic-ui-react";
+import {ChangeEvent, useEffect, useState} from "react";
+import { useStore } from "../../app/stores/store";
+import {observer} from "mobx-react-lite";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import {v4 as uuid} from "uuid";
 import { Activity } from "../../app/models/activity";
-import {ChangeEvent, useState} from "react";
+import LoadingComponent from "../../app/layout/LoadingComponent";
 
-
-interface Props{
-    activity: Activity;
-    closeForm: () => void;
-    createOrEdit: (activity: Activity) => void;
-    submitting: boolean;
-}
-export default function ActivityForm({activity: selectedActivity, closeForm, createOrEdit, submitting}:Props) {
+export default observer( function ActivityForm() {
     
-    const initialState = selectedActivity ?? {
+    const {activityStore} = useStore();
+    const {
+        createActivity,
+        updateActivity,
+        loading,
+        loadActivity,
+        loadingInitial
+    } = activityStore;
+    const {id} = useParams();
+    const navigate = useNavigate();
+    
+    const [activity, setActivity] = useState<Activity>({
         id: '',
         title: '',
         description: '',
@@ -19,20 +28,47 @@ export default function ActivityForm({activity: selectedActivity, closeForm, cre
         date: '',
         city: '',
         venue: ''
-    }
-    
-    const [activity, setActivity] = useState(initialState);
+    });
+
+    useEffect(() => {
+        if (id) {
+            loadActivity(id).then(activity => setActivity(activity!));
+        }
+        else {
+            setActivity({
+                id: '',
+                title: '',
+                description: '',
+                category: '',
+                date: '',
+                city: '',
+                venue: ''
+            });
+        }
+    }, [id, loadActivity]);
     
     function handleSubmit() {
-        console.log(activity);
-        createOrEdit(activity);
-        
+        console.log(activity)
+        if(!activity.id)
+        {
+            activity.id = uuid();
+            createActivity(activity).then(() => 
+                navigate(`/activities/${activity.id}`)
+            );
+        }
+        else
+        {
+            updateActivity(activity).then(() => 
+                navigate(`/activities/${activity.id}`)
+            );
+        }
     }
     
     function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const {name, value} = event.target;
         setActivity({...activity, [name]: value});
     }
+    if(loadingInitial) return <LoadingComponent content="Loading Activity ..."/>
     return (
         <Segment clearing>
             <Form onSubmit={handleSubmit} autoComplete='off'>
@@ -42,9 +78,9 @@ export default function ActivityForm({activity: selectedActivity, closeForm, cre
                 <Form.Input type='Date' placeholder='Date' value={activity.date} name='date' onChange={handleInputChange}/>
                 <Form.Input placeholder='City' value={activity.city} name='city' onChange={handleInputChange}/>
                 <Form.Input placeholder='Venue' value={activity.venue} name='venue' onChange={handleInputChange}/>
-                <Button loading={submitting} floated='right' positive type='submit' content='Submit'></Button>
-                <Button floated='right' type='button' content='Cancel' onClick={closeForm}></Button>
+                <Button loading={loading} floated='right' positive type='submit' content='Submit'></Button>
+                <Button as={Link} to={"/activities"} floated='right' type='button' content='Cancel'></Button>
             </Form>
         </Segment>
     )
-}
+});
