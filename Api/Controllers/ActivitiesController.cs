@@ -1,15 +1,15 @@
+
 using Application.Activities;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
+
 
 namespace Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ActivitiesController(IMediator mediator) : BasicApiController(mediator)
+public class ActivitiesController(IMediator mediator) : BaseApiController(mediator)
 {
     
     /// <summary>
@@ -17,9 +17,9 @@ public class ActivitiesController(IMediator mediator) : BasicApiController(media
     /// </summary>
     /// <returns>A list of all activities in the database.</returns>
     [HttpGet]
-    public async Task<ActionResult<List<Activity>>> GetActivities()
+    public async Task<ActionResult> GetActivities()
     {
-        return await MediatorObj.Send(new ActivityList.Query());
+        return HandleResult(await MediatorObj.Send(new ActivityList.Query()));
     }
 
     /// <summary>
@@ -29,9 +29,9 @@ public class ActivitiesController(IMediator mediator) : BasicApiController(media
     /// <returns>The activity with the specified <paramref name="id"/>,
     /// or a 404 error if no such activity exists.</returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<Activity>> GetActivity(Guid id)
+    public async Task<ActionResult> GetActivity(Guid id)
     {
-        return await MediatorObj.Send(new ActivityDetail.Query { Id = id });
+        return HandleResult(await MediatorObj.Send(new ActivityDetail.Query { Id = id }));
     }
 
     /// <summary>
@@ -42,8 +42,7 @@ public class ActivitiesController(IMediator mediator) : BasicApiController(media
     [HttpPost]
     public async Task<IActionResult> CreateActivity([FromBody] Activity activity)
     {
-        await MediatorObj.Send(new CreateActivity.Command { Activity = activity });
-        return Ok();
+        return HandleResult(await MediatorObj.Send(new CreateActivity.Command { Activity = activity }));
     }
 
     /// <summary>
@@ -56,8 +55,7 @@ public class ActivitiesController(IMediator mediator) : BasicApiController(media
     public async Task<IActionResult> EditActivity(Guid id, Activity activity)
     {
         activity.Id = id;
-        await MediatorObj.Send(new EditActivity.Command { Activity = activity }); 
-        return Ok();
+        return HandleResult(await MediatorObj.Send(new EditActivity.Command { Activity = activity }));
     }
 
     /// <summary>
@@ -68,7 +66,6 @@ public class ActivitiesController(IMediator mediator) : BasicApiController(media
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteActivity(Guid id)
     {
-        await MediatorObj.Send(new DeleteActivity.Command { Id = id });
-        return Ok();
+        return HandleResult(await MediatorObj.Send(new DeleteActivity.Command { Id = id }));
     }
 }
