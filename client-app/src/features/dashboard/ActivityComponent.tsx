@@ -1,6 +1,7 @@
 import {Button, Icon, Item, Segment} from "semantic-ui-react";
 import {Link} from "react-router-dom";
 import { Activity } from "../../app/models/activity";
+import {format} from "date-fns";
 
 interface Props {
     activity: Activity;
@@ -22,7 +23,7 @@ export default function ActivityComponent({activity}:Props) {
             </Segment>
             <Segment>
                 <span>
-                    <Icon name='clock'/> {activity.date}
+                    <Icon name='clock'/> {format(activity.date!, 'dd MM yyyy h:mm aa')}
                     <Icon name='marker'/> {activity.venue}
                 </span>
             </Segment>
