@@ -35,12 +35,16 @@ public class AccountController(UserManager<AppUser> userManager,
     {
         if (await userManager.FindByEmailAsync(registerDto.Email) != null)
         {
-            return BadRequest("Email taken");
+            ModelState.AddModelError("email", "Email taken");
+            return ValidationProblem();
+            //return BadRequest("Email taken");
         }
 
         if (await userManager.FindByNameAsync(registerDto.Username) != null)
         {
-            return BadRequest("Username taken");
+            ModelState.AddModelError("username", "Username taken");
+            return ValidationProblem();
+            //return BadRequest("Username taken");
         }
 
         var user = new AppUser(registerDto.DisplayName, registerDto.Email, registerDto.Username);
