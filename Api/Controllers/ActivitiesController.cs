@@ -54,6 +54,7 @@ public class ActivitiesController(IMediator mediator) : BaseApiController(mediat
     /// <param name="activity"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
+    [Authorize(Policy = "IsActivityHost")]
     public async Task<IActionResult> EditActivity(Guid id, Activity activity)
     {
         activity.Id = id;
@@ -66,8 +67,22 @@ public class ActivitiesController(IMediator mediator) : BaseApiController(mediat
     /// <param name="id">The identifier of the activity to delete.</param>
     /// <returns>A 200 OK response if the activity was successfully deleted.</returns>
     [HttpDelete("{id}")]
+    [Authorize(Policy = "IsActivityHost")]
     public async Task<IActionResult> DeleteActivity(Guid id)
     {
         return HandleResult(await MediatorObj.Send(new DeleteActivity.Command { Id = id }));
+    }
+    
+  
+    /// <summary>
+    /// Updates the attendance status of the current user for the specified activity.
+    /// </summary>
+    /// <param name="id">The identifier of the activity to update attendance for.</param>
+    /// <returns>A 200 OK response if the attendance was successfully updated, or an appropriate error response if not.</returns>
+   
+    [HttpPost("{id}/attend")]
+    public async Task<IActionResult> UpdateAttendance(Guid id)
+    {
+        return HandleResult(await MediatorObj.Send(new UpdateAttendance.Command { Id = id }));
     }
 }

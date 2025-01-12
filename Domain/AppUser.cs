@@ -10,7 +10,8 @@ public class AppUser :IdentityUser
         Email = email;
         UserName = userName;
     }
-
+    
     public string DisplayName { get; set; } = string.Empty;
     public string Bio { get; set; } = string.Empty;
+    public ICollection<ActivityAttendee> Attendees { get; set; } = new List<ActivityAttendee>();
 }
